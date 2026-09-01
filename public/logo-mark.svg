@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Chitral Natural Nuts logo">
+  <defs>
+    <linearGradient id="bg" x1="72" y1="32" x2="438" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2d6a4f"/>
+      <stop offset="1" stop-color="#0a1f17"/>
+    </linearGradient>
+    <linearGradient id="nut" x1="188" y1="298" x2="332" y2="472" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f59e0b"/>
+      <stop offset="1" stop-color="#b45309"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <circle cx="372" cy="132" r="56" fill="#fbbf24"/>
+  <path d="M56 310 181 142l64 78 45-60 166 150H56Z" fill="#f4efe4"/>
+  <path d="m181 142 64 78-34 31-30-24-38 42-45 41H56L181 142Z" fill="#ffffff"/>
+  <path d="M56 310h400v54H56z" fill="#1b4332"/>
+  <path d="M258 290c-62 0-112 46-112 103 0 54 46 87 112 87s112-33 112-87c0-57-50-103-112-103Z" fill="url(#nut)" stroke="#fcd34d" stroke-width="12"/>
+  <path d="M258 303v163M258 330c-29 2-50 22-54 48m54-13c-26 4-42 21-44 46m44 5c-20 2-34 13-38 29m38-115c29 2 50 22 54 48m-54-13c26 4 42 21 44 46m-44 5c20 2 34 13 38 29" fill="none" stroke="#78350f" stroke-width="12" stroke-linecap="round"/>
+  <path d="M166 390c-20-9-33-27-38-48 23 0 43 9 57 27m165 21c20-9 33-27 38-48-23 0-43 9-57 27" fill="none" stroke="#86a98f" stroke-width="11" stroke-linecap="round"/>
+</svg>
