@@ -27,6 +27,19 @@ export const products = pgTable("products", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+// New table to store multiple images per product
+export const productImages = pgTable("product_images", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  productId: uuid("product_id")
+    .notNull()
+    .references(() => products.id, { onDelete: "cascade" }),
+  imageUrl: text("image_url").notNull(),
+  altText: text("alt_text").notNull(),
+  displayOrder: integer("display_order").notNull().default(0),
+  isAiGenerated: boolean("is_ai_generated").notNull().default(true),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
 export const orders = pgTable("orders", {
   id: uuid("id").primaryKey().defaultRandom(),
   customerName: text("customer_name").notNull(),
@@ -65,6 +78,7 @@ export const reviews = pgTable("reviews", {
 });
 
 export type ProductRow = typeof products.$inferSelect;
+export type ProductImageRow = typeof productImages.$inferSelect;
 export type OrderRow = typeof orders.$inferSelect;
 export type OrderItemRow = typeof orderItems.$inferSelect;
 export type ReviewRow = typeof reviews.$inferSelect;
