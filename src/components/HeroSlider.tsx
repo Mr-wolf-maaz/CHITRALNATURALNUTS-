@@ -23,7 +23,7 @@ const SLIDES: Slide[] = [
     cta: "Shop Flash Sale",
     href: "#flash",
     badge: "Up to 25% OFF",
-    image: "/images/hero-banner-1.jpg",
+    image: "https://images.unsplash.com/photo-1599599810694-b5ac4dd84e13?w=1200&h=400&fit=crop",
   },
   {
     kicker: "From the Roof of Pakistan",
@@ -32,7 +32,7 @@ const SLIDES: Slide[] = [
     cta: "Browse Collection",
     href: "#feed",
     badge: "COD Nationwide",
-    image: "/images/hero-banner-2.jpg",
+    image: "https://images.unsplash.com/photo-1585518419759-78b70fe6e619?w=1200&h=400&fit=crop",
   },
   {
     kicker: "This Week Only",
@@ -67,7 +67,7 @@ export default function HeroSlider() {
             )}
           >
             {s.image ? (
-              <img src={s.image} alt="" className="h-full w-full object-cover" />
+              <img src={s.image} alt="" className="h-full w-full object-cover" loading="lazy" />
             ) : (
               <div className={cn("h-full w-full bg-gradient-to-br", s.gradient)}>
                 <Leaf className="absolute -right-8 -top-8 h-56 w-56 text-white/5" />
@@ -91,7 +91,7 @@ export default function HeroSlider() {
               </p>
               <a
                 href={s.href}
-                className="mt-4 flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs font-extrabold uppercase tracking-wider text-pine-900 shadow-lg transition hover:-translate-y-0.5 hover:bg-amber-400 hover:text-pine-950 sm:text-sm"
+                className="mt-4 flex w-fit items-center gap-2 rounded-full bg-white px-5 py-2.5 text-xs font-extrabold uppercase tracking-wider text-pine-900 shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl active:translate-y-0"
               >
                 <Truck className="h-4 w-4" />
                 {s.cta}
