@@ -12,6 +12,15 @@ export type ProductDTO = {
   createdAt: string;
 };
 
+export type CategoryDTO = {
+  id: string;
+  name: string;
+  urdu: string;
+  image: string;
+  description?: string;
+  createdAt: string;
+};
+
 export type OrderItemDTO = {
   id: string;
   productId: string;
@@ -37,12 +46,14 @@ export type OrderDTO = {
 };
 
 export const CATEGORIES = [
-  { name: "Walnuts", urdu: "Akhrot", image: "/images/products/walnuts.jpg" },
-  { name: "Almonds", urdu: "Badam", image: "/images/products/almonds.jpg" },
-  { name: "Chalghoza", urdu: "Pine Nuts", image: "/images/products/chalghoza.jpg" },
-  { name: "Dried Apricots", urdu: "Khumani", image: "/images/products/apricots.jpg" },
-  { name: "White Mulberries", urdu: "Shahtoot", image: "/images/products/mulberries.jpg" },
-  { name: "Dried Figs", urdu: "Anjeer", image: "/images/products/figs.jpg" },
+  { name: "Walnuts", urdu: "اخروٹ", image: "https://images.unsplash.com/photo-1585518419759-78b70fe6e619?w=400&h=400&fit=crop" },
+  { name: "Almonds", urdu: "بادام", image: "https://images.unsplash.com/photo-1585518419759-78b70fe6e619?w=400&h=400&fit=crop" },
+  { name: "Chalghoza", urdu: "چلغوزہ", image: "https://images.unsplash.com/photo-1599599810694-b5ac4dd84e13?w=400&h=400&fit=crop" },
+  { name: "Dried Apricots", urdu: "خمانی", image: "https://images.unsplash.com/photo-1585518419759-78b70fe6e619?w=400&h=400&fit=crop" },
+  { name: "White Mulberries", urdu: "شہتوت", image: "https://images.unsplash.com/photo-1599599810694-b5ac4dd84e13?w=400&h=400&fit=crop" },
+  { name: "Dried Figs", urdu: "انجیر", image: "https://images.unsplash.com/photo-1585518419759-78b70fe6e619?w=400&h=400&fit=crop" },
+  { name: "Honey", urdu: "شہد", image: "https://images.unsplash.com/photo-1599599810694-b5ac4dd84e13?w=400&h=400&fit=crop" },
+  { name: "Salajet", urdu: "سلاجیت", image: "https://images.unsplash.com/photo-1585518419759-78b70fe6e619?w=400&h=400&fit=crop" },
 ];
 
 export const ORDER_STATUSES = ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"];
