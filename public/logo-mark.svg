@@ -1,20 +1,64 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Chitral Natural Nuts logo">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Chitral Natural Nuts">
   <defs>
-    <linearGradient id="bg" x1="72" y1="32" x2="438" y2="480" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#2d6a4f"/>
-      <stop offset="1" stop-color="#0a1f17"/>
+    <linearGradient id="outerRing" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1f5233;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a3d1f;stop-opacity:1" />
     </linearGradient>
-    <linearGradient id="nut" x1="188" y1="298" x2="332" y2="472" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#f59e0b"/>
-      <stop offset="1" stop-color="#b45309"/>
+    <linearGradient id="innerCircle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
     </linearGradient>
   </defs>
-  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
-  <circle cx="372" cy="132" r="56" fill="#fbbf24"/>
-  <path d="M56 310 181 142l64 78 45-60 166 150H56Z" fill="#f4efe4"/>
-  <path d="m181 142 64 78-34 31-30-24-38 42-45 41H56L181 142Z" fill="#ffffff"/>
-  <path d="M56 310h400v54H56z" fill="#1b4332"/>
-  <path d="M258 290c-62 0-112 46-112 103 0 54 46 87 112 87s112-33 112-87c0-57-50-103-112-103Z" fill="url(#nut)" stroke="#fcd34d" stroke-width="12"/>
-  <path d="M258 303v163M258 330c-29 2-50 22-54 48m54-13c-26 4-42 21-44 46m44 5c-20 2-34 13-38 29m38-115c29 2 50 22 54 48m-54-13c26 4 42 21 44 46m-44 5c20 2 34 13 38 29" fill="none" stroke="#78350f" stroke-width="12" stroke-linecap="round"/>
-  <path d="M166 390c-20-9-33-27-38-48 23 0 43 9 57 27m165 21c20-9 33-27 38-48-23 0-43 9-57 27" fill="none" stroke="#86a98f" stroke-width="11" stroke-linecap="round"/>
+  
+  <!-- Outer white background -->
+  <circle cx="256" cy="256" r="250" fill="#f5f5f0" stroke="#1f5233" stroke-width="8"/>
+  
+  <!-- Inner orange circle for nuts -->
+  <circle cx="256" cy="256" r="140" fill="url(#innerCircle)" stroke="#fcd34d" stroke-width="6"/>
+  
+  <!-- Walnuts (top left) -->
+  <ellipse cx="200" cy="210" rx="24" ry="32" fill="#8b4513" opacity="0.9"/>
+  <ellipse cx="220" cy="220" rx="22" ry="28" fill="#a0522d" opacity="0.8"/>
+  <path d="M 210 195 Q 215 185 220 195" stroke="#654321" stroke-width="2" fill="none"/>
+  
+  <!-- Pistachios (top right) -->
+  <ellipse cx="310" cy="190" rx="18" ry="26" fill="#daa520" opacity="0.95" transform="rotate(-20 310 190)"/>
+  <ellipse cx="330" cy="200" rx="17" ry="24" fill="#f0e68c" opacity="0.9" transform="rotate(15 330 200)"/>
+  <ellipse cx="315" cy="215" rx="16" ry="22" fill="#bdb76b" opacity="0.85" transform="rotate(-35 315 215)"/>
+  <ellipse cx="340" cy="225" rx="15" ry="20" fill="#daa520" opacity="0.8" transform="rotate(40 340 225)"/>
+  
+  <!-- Apricots/Dried fruits (center) -->
+  <circle cx="240" cy="250" r="20" fill="#d2691e" opacity="0.9"/>
+  <circle cx="270" cy="240" r="22" fill="#cd853f" opacity="0.85"/>
+  <circle cx="280" cy="270" r="18" fill="#daa520" opacity="0.8"/>
+  <circle cx="245" cy="280" r="19" fill="#d2691e" opacity="0.9"/>
+  
+  <!-- Almonds (right side) -->
+  <ellipse cx="340" cy="260" rx="16" ry="28" fill="#d4a574" opacity="0.9" transform="rotate(30 340 260)"/>
+  <ellipse cx="360" cy="250" rx="15" ry="26" fill="#c19a6b" opacity="0.85" transform="rotate(-20 360 250)"/>
+  <ellipse cx="350" cy="290" rx="17" ry="27" fill="#d4a574" opacity="0.8" transform="rotate(50 350 290)"/>
+  <ellipse cx="370" cy="280" rx="14" ry="24" fill="#a89968" opacity="0.75" transform="rotate(-10 370 280)"/>
+  
+  <!-- More nuts (left side) -->
+  <ellipse cx="170" cy="270" rx="17" ry="25" fill="#8b6914" opacity="0.85" transform="rotate(-30 170 270)"/>
+  <ellipse cx="155" cy="250" rx="16" ry="24" fill="#9b8b14" opacity="0.8" transform="rotate(25 155 250)"/>
+  <ellipse cx="175" cy="310" rx="15" ry="23" fill="#8b6914" opacity="0.75" transform="rotate(-45 175 310)"/>
+  
+  <!-- Text in outer ring -->
+  <defs>
+    <path id="topText" d="M 100,256 A 156,156 0 0,1 412,256" fill="none"/>
+    <path id="bottomText" d="M 412,256 A 156,156 0 0,1 100,256" fill="none"/>
+  </defs>
+  
+  <text font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#1f5233" letter-spacing="3" font-style="italic">
+    <textPath href="#topText" startOffset="50%" text-anchor="middle">
+      FROM OUR VALLEYS TO YOUR DOORSTEP
+    </textPath>
+  </text>
+  
+  <text font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#1f5233" letter-spacing="2" font-style="italic">
+    <textPath href="#bottomText" startOffset="50%" text-anchor="middle">
+      CHITRAL NATURAL NUTS
+    </textPath>
+  </text>
 </svg>
