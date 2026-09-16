@@ -12,73 +12,6 @@ const EXT_BY_MIME: Record<string, string> = {
   "image/gif": "gif",
 };
 
-// Parse Cloudinary URL to extract cloud name and API key
-function parseCloudinaryUrl() {
-  const url = process.env.CLOUDINARY_URL;
-  if (!url) {
-    throw new Error("CLOUDINARY_URL is not set");
-  }
-
-  // Format: cloudinary://api_key:api_secret@cloud_name
-  const match = url.match(/cloudinary:\/\/([^:]+):([^@]+)@(.+)/);
-  if (!match) {
-    throw new Error("Invalid CLOUDINARY_URL format. Expected: cloudinary://api_key:api_secret@cloud_name");
-  }
-
-  return {
-    apiKey: match[1],
-    apiSecret: match[2],
-    cloudName: match[3],
-  };
-}
-
-// Upload to Cloudinary using unsigned preset
-async function uploadToCloudinary(buffer: Buffer, filename: string): Promise<string> {
-  const { cloudName } = parseCloudinaryUrl();
-  const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET;
-
-  if (!uploadPreset) {
-    throw new Error("CLOUDINARY_UPLOAD_PRESET is not configured. Create an unsigned upload preset in Cloudinary dashboard.");
-  }
-
-  // Create FormData with the file
-  const formData = new FormData();
-  const blob = new Blob([buffer], { type: "image/*" });
-  formData.append("file", blob, filename);
-  formData.append("upload_preset", uploadPreset);
-  formData.append("folder", "chitralnuts-products");
-
-  const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
-
-  try {
-    const response = await fetch(uploadUrl, {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("Cloudinary error response:", errorText);
-      throw new Error(`Cloudinary upload failed with status ${response.status}: ${errorText}`);
-    }
-
-    const data = (await response.json()) as { secure_url?: string; error?: { message: string } };
-
-    if (data.error) {
-      throw new Error(`Cloudinary error: ${data.error.message}`);
-    }
-
-    if (!data.secure_url) {
-      throw new Error("No URL returned from Cloudinary. Check your upload preset is set to 'Unsigned'.");
-    }
-
-    return data.secure_url;
-  } catch (e) {
-    console.error("Upload to Cloudinary failed:", e);
-    throw e;
-  }
-}
-
 export async function POST(req: NextRequest) {
   if (!(await isAdminAuthed(req))) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -104,6 +37,26 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Get Cloudinary credentials
+    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
+    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
+
+    if (!cloudName) {
+      console.error("Missing NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME");
+      return NextResponse.json(
+        { error: "Server configuration error: Cloud name not set" },
+        { status: 500 }
+      );
+    }
+
+    if (!uploadPreset) {
+      console.error("Missing NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET");
+      return NextResponse.json(
+        { error: "Server configuration error: Upload preset not set" },
+        { status: 500 }
+      );
+    }
+
     const baseName = String(form.get("name") ?? "product")
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
@@ -113,11 +66,57 @@ export async function POST(req: NextRequest) {
     const filename = `${baseName}-${randomBytes(4).toString("hex")}.${ext}`;
     const buffer = Buffer.from(await file.arrayBuffer());
 
-    console.log(`Uploading file: ${filename} (${file.size} bytes)`);
-    const url = await uploadToCloudinary(buffer, filename);
+    // Create FormData for Cloudinary
+    const formData = new FormData();
+    const blob = new Blob([buffer], { type: file.type });
+    formData.append("file", blob, filename);
+    formData.append("upload_preset", uploadPreset);
+    formData.append("folder", "chitralnuts-products");
 
-    console.log(`Successfully uploaded to: ${url}`);
-    return NextResponse.json({ url });
+    const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+
+    console.log(`Uploading to Cloudinary: ${uploadUrl}`);
+    console.log(`File: ${filename} (${file.size} bytes)`);
+
+    const response = await fetch(uploadUrl, {
+      method: "POST",
+      body: formData,
+    });
+
+    const responseData = await response.json() as { 
+      secure_url?: string; 
+      error?: { message: string };
+      public_id?: string;
+    };
+
+    if (!response.ok) {
+      console.error("Cloudinary error:", responseData);
+      return NextResponse.json(
+        { 
+          error: responseData.error?.message || `Upload failed with status ${response.status}` 
+        },
+        { status: 500 }
+      );
+    }
+
+    if (responseData.error) {
+      console.error("Cloudinary error response:", responseData.error);
+      return NextResponse.json(
+        { error: `Cloudinary error: ${responseData.error.message}` },
+        { status: 500 }
+      );
+    }
+
+    if (!responseData.secure_url) {
+      console.error("No URL in response:", responseData);
+      return NextResponse.json(
+        { error: "No URL returned from Cloudinary" },
+        { status: 500 }
+      );
+    }
+
+    console.log(`Successfully uploaded: ${responseData.secure_url}`);
+    return NextResponse.json({ url: responseData.secure_url });
   } catch (e) {
     console.error("POST /api/upload error:", e);
     const errorMessage = e instanceof Error ? e.message : "Upload failed.";
